@@ -63,3 +63,58 @@ Expense-Tracker/
 │ ├── database/ # Database schemas and scripts
 │ ├── docker/ # Docker configuration files
 │ └── README.md
+
+## Architecture Diagram
+Below is a textual representation of the architecture (consider visualizing this with a tool like Lucidchart, Draw.io, or Figma):
+
++-------------------------------------------------------------+
+|                           CLIENT                            |
+|            (Frontend: React.js or Postman for API testing)  |
++-------------------------------------------------------------+
+                              |
+                              |
+                              ▼
+                    +-------------------+
+                    |   API Gateway     |
+                    |  (Spring Cloud)   |
+                    +-------------------+
+                              |
+                              ▼
+      +----------------------+----------------------+----------------------+
+      |                      |                      |                      |
++-------------+      +------------------+   +-----------------+   +------------------+
+| Eureka      |      | User Service     |   | Expense Service |   | Report Service   |
+| Server      |      | (Spring Boot)    |   | (Spring Boot)   |   | (Spring Boot)    |
+| (Discovery) |      +------------------+   +-----------------+   +------------------+
+|             |             |                      |                      |
++-------------+       +------+              +------+               +------+
+                       |                     |                      |
+                +---------------+     +---------------+      +---------------+
+                | User Database |     | Expense DB    |      | Report DB     |
+                |   (Postgres)  |     |   (MySQL)     |      |   (MySQL)     |
+                +---------------+     +---------------+      +---------------+
+                              |
++--------------------------+
+| Config Server            |
+| (Centralized Configs)    |
++--------------------------+
+                              |
+                              ▼
+                    +------------------+
+                    | AI Service       |
+                    | (Flask/ML model) |
+                    +------------------+
+                              |
+                       +---------------+
+                       | AI/ML Database |
+                       | (SQLite/NoSQL) |
+                       +---------------+
+                              |
+                              ▼
+                    +------------------+
+                    | Zipkin Server    |
+                    | (Distributed     |
+                    | Tracing)         |
+                    +------------------+
+
+
